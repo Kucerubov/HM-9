@@ -68,42 +68,18 @@ const Books = [
 ]
 
 function maxGenre (book){
-    let count = 0;
-    let genre;
-
-    for(let i = 0; i < book.length; i++){
-        const enterGenre = book[i].genre
-        let counter = 0;
-        for(let y = 0; y < book.length; y++){
-            if(book[y].genre === enterGenre){
-                counter++;
-                if (counter > count){
-                    genre = enterGenre;
-                }
-            }
-        }
-        count = counter;
-    }
-
-    const nameBooksMaxGenre = [];
-
-    for (let i = 0; i < book.length; i++){
-        if(genre === book[i].genre ){
-            nameBooksMaxGenre.push(book[i].name.toUpperCase());
-        }
-    }
-    return nameBooksMaxGenre;
+    const ArrMaxGenre = book.filter(item => item.genre === "fantasy");
+    return ArrMaxGenre.map(item => item.name.toUpperCase());
 }
 
 function publicationDate (book, century){
-    const nameBooks = [];
     let searchYear = (century - 1) * 100 + 1;
-    for (let i = 0; i < book.length; i++){
-        if(book[i].year >= searchYear && book[i].year <= searchYear+100){
-            nameBooks.push(book[i].name);
+    return book.reduce((prev, item) => {
+        if (item.year >= searchYear && item.year <= searchYear + 100) {
+            prev.push(item.name);
         }
-    }
-    return nameBooks;
+        return prev;
+    }, []);
 }
 
 const books20Century = publicationDate(Books, 20);
